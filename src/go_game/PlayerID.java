@@ -10,7 +10,7 @@ package go_game;
  * @author baqir
  */
 public class PlayerID {
-    private int id;
+    private final int id;
     // Constructor
     public PlayerID(int id) {
         this.id = id;
