@@ -30,7 +30,7 @@ public class Game {
         PlayerID player2ID = player2.getPlayerSpecification().getPlayerID();
 
         
-        while(!isGameFinished()) {
+        while(true) {
             // Making Turn
             switch(turn) {
                 case 0: {
@@ -69,6 +69,7 @@ public class Game {
     
     
     // Private Methods
+    // Muhammad Soban
     private String getInput(String s) {
          Scanner sc = new Scanner(System.in);
          
@@ -76,21 +77,27 @@ public class Game {
     }
     
     // After every turn check for opponent beads
-    private void checkTurn(PlayerID id) {
+    // Muhammad Adeel
+    // Remove Opponent Beads If possible
+    private void checkTurn(PlayerID playerId) {
         // 
     }
     
     // After the end of the game check for winning player
+    // Baqir
     private PlayerID checkWin() {
         return new PlayerID(1);
     }
     
     // Check is Game Completed
+    // Kashif
     private boolean isGameFinished() {
         return false;
     }
     
     // Place Bead on Board
+    // Usama Ahmad
+    // Two Rules
     private boolean placeBead(BeadSpecification spec) {
         return false;
     }
