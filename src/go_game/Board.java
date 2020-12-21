@@ -9,6 +9,12 @@ public class Board {
         this.matrixOfBeads = new MatrixOfBeads(spec.getHeight(), spec.getWidth());
     }
 
+    // Getter
+    public BoardSpecification getBoardSpecification() {
+        return spec;
+    }
+    
+    
     public void placeBead(BeadSpecification spec) {
         matrixOfBeads.setBead(spec);
     }
