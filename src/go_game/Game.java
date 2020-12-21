@@ -174,7 +174,7 @@ public class Game {
     
     // A recurssive method
     private void calculateNodes(int beadValue, int x, int y, int totalNodes[], int board[][]) {
-        if(board[x][y] != beadValue) {
+        if(board[x][y] == 0) {
             totalNodes[0] += 1;
         }
         
