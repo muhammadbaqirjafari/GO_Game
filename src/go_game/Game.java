@@ -193,7 +193,7 @@ public class Game {
         if(spec.getPlayerID().equals(player1.getPlayerSpecification().getPlayerID())) {
             logicalBoard[x][y] = 1;
         } else {
-            logicalBoard[x][y] = 0;
+            logicalBoard[x][y] = 2;
         }
         
         // If nodes are 0 than return false
