@@ -18,8 +18,12 @@ public class Game {
     
     // Constructor
     public Game() {
-       player1 = new Player(new PlayerSpecification(getInput("Enter First Player Name : "), new PlayerID(1)));
-       player2 = new Player(new PlayerSpecification(getInput("Enter Second Player Name : "), new PlayerID(2)));
+       // Player Names
+       String player1Name = getInput("Enter First Player Name : ", "");
+       String player2Name = getInput("Enter Second Player Name : ", player1Name);
+       
+       player1 = new Player(new PlayerSpecification(player1Name, new PlayerID(1)));
+       player2 = new Player(new PlayerSpecification(player2Name, new PlayerID(2)));
        board = new Board(new BoardSpecification(10, 10));
     }
     
@@ -107,12 +111,24 @@ public class Game {
         }
     }
     
-    // Private Methods
-    // Muhammad Soban
-    private String getInput(String s) {
-         Scanner sc = new Scanner(System.in);
-         
-         return "Muhammad";
+    // Take Input A Valid Player Name
+    private String getInput(String message, String name) {
+        Scanner sc = new Scanner(System.in);
+        String playerName = "";
+        
+        System.out.print(message);
+        while(true) {
+            playerName = sc.nextLine();
+            
+            if(!playerName.equals(name) && !playerName.isBlank()) {
+                break;
+            }
+            
+            System.out.println("Enter a Valid Name!");
+            System.out.print(message);
+        }
+
+        return playerName;  // Returns Name of the Player
     }
     
     // After every turn check for opponent beads
