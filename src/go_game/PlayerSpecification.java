@@ -11,7 +11,7 @@ package go_game;
  */
 public class PlayerSpecification {
     private String name;
-    private PlayerID playerID;
+        private PlayerID playerID;
     // Constructor
     public PlayerSpecification(String name, PlayerID playerID) {
         this.name = name;
