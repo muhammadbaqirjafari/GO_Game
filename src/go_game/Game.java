@@ -91,12 +91,20 @@ public class Game {
                 }
             }
         }
-        gameFinished();
+        gameFinished(player1ID, player2ID);
     }
     
-    
-    private void gameFinished() {
+    // This method display the winner
+    private void gameFinished(PlayerID player1ID, PlayerID player2ID) {
+        PlayerID winnerID = checkWin();
         
+        if(winnerID == player1ID) {
+            System.out.println("Player 1 is the Winner!!!");
+        } else if(winnerID == player2ID) {
+            System.out.println("Player 2 is the Winner!!!");
+        } else {
+            System.out.println("Game Draw!!!");
+        }
     }
     
     // Private Methods
