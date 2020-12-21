@@ -144,16 +144,58 @@ public class Game {
         return new PlayerID(1);
     }
     
-    // Check is Game Completed
-    // Kashif
-    private boolean isGameFinished() {
-        return false;
-    }
-    
     // Place Bead on Board
     // Usama Ahmad
     // Two Rules
     private boolean placeBead(BeadSpecification spec) {
         return false;
+    }
+    
+    
+    // This method will return total nodes on given 
+    // Input : logical board where
+    // board[i][j] = 0 means empty location
+    // board[i][j] = 1 means player1 Bead
+    // board[i][j] = 2 means player2 Bead
+    private int totalNodes(int x, int y, int board[][]) {
+        if(board[x][y] == 0) {
+            return -1; // Means location is empty
+        }
+        
+        int beadValue = board[x][y];
+        int totalNodes[] = new int[1];
+        totalNodes[0] = 0;
+        
+        calculateNodes(beadValue, x, y, totalNodes, board);
+        
+        return totalNodes[0];
+    }
+    
+    
+    // A recurssive method
+    private void calculateNodes(int beadValue, int x, int y, int totalNodes[], int board[][]) {
+        if(board[x][y] != beadValue) {
+            totalNodes[0] += 1;
+        }
+        
+        int rowLength = board[0].length;
+        int columnLength = board.length;
+        
+        // Left Check
+        if(x + 1 < rowLength && board[x+1][y] == beadValue) {
+            calculateNodes(beadValue, x + 1, y, totalNodes, board);
+        }
+        // Right Check
+        else if(x - 1 > 0 && board[x-1][y] == beadValue) {
+            calculateNodes(beadValue, x - 1, y, totalNodes, board);
+        }
+        // Up Check
+        else if(y - 1 > 0 && board[x][y-1] == beadValue) {
+            calculateNodes(beadValue, x, y - 1, totalNodes, board);
+        }
+        // Down Check
+        else if(y + 1 < columnLength && board[x][y+1] == beadValue) {
+            calculateNodes(beadValue, x, y + 1, totalNodes, board);
+        }
     }
 }
