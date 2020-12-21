@@ -63,7 +63,7 @@ public class Game {
                         }
                     }
                     // Check if we can remove opponents beads
-                    checkTurn(player1ID);
+                    checkTurn(player2ID, tempLOC);
                     turn = 1; // Switch the turn
                     break;
                 }
@@ -89,7 +89,7 @@ public class Game {
                         }
                     }
                     // Check if we can remove opponents beads
-                    checkTurn(player2ID);
+                    checkTurn(player1ID, tempLOC);
                     turn = 0; // Switch the turn
                     break;
                 }
@@ -131,11 +131,44 @@ public class Game {
         return playerName;  // Returns Name of the Player
     }
     
-    // After every turn check for opponent beads
-    // Muhammad Adeel
     // Remove Opponent Beads If possible
-    private void checkTurn(PlayerID playerId) {
-        // 
+    private void checkTurn(PlayerID opponentPlayerId, BeadLOC loc) {
+        int logicalBoard[][] = getLogicalBoard();
+        int x = loc.getX();
+        int y = loc.getY();
+        int width = board.getBoardSpecification().getWidth();
+        int height = board.getBoardSpecification().getHeight();
+        
+        // Now there are only four possibilites
+        // Left Check
+        if(x + 1 < width && board.getBeadSpecification(new BeadLOC(x + 1, y)).getPlayerID().equals(opponentPlayerId)) {
+            if(totalNodes(x + 1, y, logicalBoard) == 0) {
+                removeBeads(new BeadLOC(x + 1, y));
+            }
+        }
+        // Right Check
+        if(x - 1 > 0 && board.getBeadSpecification(new BeadLOC(x - 1, y)).getPlayerID().equals(opponentPlayerId)) {
+            if(totalNodes(x - 1, y, logicalBoard) == 0) {
+                removeBeads(new BeadLOC(x - 1, y));
+            }
+        }
+        // Up Check
+        if(y - 1 > 0 && board.getBeadSpecification(new BeadLOC(x, y - 1)).getPlayerID().equals(opponentPlayerId)) {
+            if(totalNodes(x, y - 1, logicalBoard) == 0) {
+                removeBeads(new BeadLOC(x, y - 1));
+            }
+        }
+        // Down Check
+        if(y + 1 < height && board.getBeadSpecification(new BeadLOC(x, y + 1)).getPlayerID().equals(opponentPlayerId)) {
+            if(totalNodes(x, y + 1, logicalBoard) == 0) {
+                removeBeads(new BeadLOC(x, y + 1));
+            }
+        }
+    }
+    
+    // Remove All the beads at current location
+    private void removeBeads(BeadLOC loc) {
+        
     }
     
     // After the end of the game check for winning player
@@ -152,33 +185,12 @@ public class Game {
         }
         // Ok now there is empty location
         // Check if it is possible to place bead or not
-        // Creating a logical board where
-        // board[i][j] = 0 means empty location
-        // board[i][j] = 1 means player1 Bead
-        // board[i][j] = 2 means player2 Bead
-        int logicalBoard[][] = new int[board.getBoardSpecification().getWidth()][board.getBoardSpecification().getHeight()];
-        
-        PlayerID player1ID = player1.getPlayerSpecification().getPlayerID();
-        PlayerID player2ID = player2.getPlayerSpecification().getPlayerID();
-        for(int i = 0; i < logicalBoard[0].length; ++i) {
-            for(int j = 0; j < logicalBoard.length; ++j) {
-                // Get PlayerID at current location
-                PlayerID tempPlayerID = board.getBeadSpecification(new BeadLOC(i, j)).getPlayerID();
-                
-                if(tempPlayerID.equals(player1ID)) {
-                    logicalBoard[i][j] = 1;
-                } else if (tempPlayerID.equals(player2ID)) {
-                    logicalBoard[i][j] = 2;
-                } else {
-                    logicalBoard[i][j] = 0;
-                }
-            }
-        }
+        int logicalBoard[][] = getLogicalBoard();
         
         // Placing the bead on logicalBoard
         int x = spec.getLoc().getX();
         int y = spec.getLoc().getY();
-        if(spec.getPlayerID().equals(player1ID)) {
+        if(spec.getPlayerID().equals(player1.getPlayerSpecification().getPlayerID())) {
             logicalBoard[x][y] = 1;
         } else {
             logicalBoard[x][y] = 0;
@@ -195,11 +207,8 @@ public class Game {
     }
     
     
-    // This method will return total nodes on given 
-    // Input : logical board where
-    // board[i][j] = 0 means empty location
-    // board[i][j] = 1 means player1 Bead
-    // board[i][j] = 2 means player2 Bead
+    // Input : logical Board
+    // Return total nodes
     private int totalNodes(int x, int y, int board[][]) {
         if(board[x][y] == 0) {
             return -1; // Means location is empty
@@ -240,5 +249,33 @@ public class Game {
         if(y + 1 < columnLength && board[x][y+1] == beadValue) {
             calculateNodes(beadValue, x, y + 1, totalNodes, board);
         }
+    }
+    
+    
+    // Return a logical board where
+    // board[i][j] = 0 means empty location
+    // board[i][j] = 1 means player1 Bead
+    // board[i][j] = 2 means player2 Bead
+    private int[][] getLogicalBoard() {
+        int logicalBoard[][] = new int[board.getBoardSpecification().getWidth()][board.getBoardSpecification().getHeight()];
+        
+        PlayerID player1ID = player1.getPlayerSpecification().getPlayerID();
+        PlayerID player2ID = player2.getPlayerSpecification().getPlayerID();
+        for(int i = 0; i < logicalBoard[0].length; ++i) {
+            for(int j = 0; j < logicalBoard.length; ++j) {
+                // Get PlayerID at current location
+                PlayerID tempPlayerID = board.getBeadSpecification(new BeadLOC(i, j)).getPlayerID();
+                
+                if(tempPlayerID.equals(player1ID)) {
+                    logicalBoard[i][j] = 1;
+                } else if (tempPlayerID.equals(player2ID)) {
+                    logicalBoard[i][j] = 2;
+                } else {
+                    logicalBoard[i][j] = 0;
+                }
+            }
+        }
+        
+        return logicalBoard;
     }
 }
