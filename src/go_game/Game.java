@@ -94,6 +94,10 @@ public class Game {
     private boolean isGameFinished() {
         return false;
     }
+    // checkAreaCovered by kashif
+    private boolean checkCoveredArea(int[][] dp, int pTurn, int i, int j){
+
+    }
     
     // Place Bead on Board
     // Usama Ahmad
