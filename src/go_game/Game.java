@@ -186,15 +186,15 @@ public class Game {
             calculateNodes(beadValue, x + 1, y, totalNodes, board);
         }
         // Right Check
-        else if(x - 1 > 0 && board[x-1][y] == beadValue) {
+        if(x - 1 > 0 && board[x-1][y] == beadValue) {
             calculateNodes(beadValue, x - 1, y, totalNodes, board);
         }
         // Up Check
-        else if(y - 1 > 0 && board[x][y-1] == beadValue) {
+        if(y - 1 > 0 && board[x][y-1] == beadValue) {
             calculateNodes(beadValue, x, y - 1, totalNodes, board);
         }
         // Down Check
-        else if(y + 1 < columnLength && board[x][y+1] == beadValue) {
+        if(y + 1 < columnLength && board[x][y+1] == beadValue) {
             calculateNodes(beadValue, x, y + 1, totalNodes, board);
         }
     }
