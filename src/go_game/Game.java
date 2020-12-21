@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package go_game;
-import java.util.*;
+
+import java.util.Scanner;
 
 /**
  *
@@ -24,49 +25,79 @@ public class Game {
     
     // Public Methods
     public void playGame() {
-        int turn = 0; // For Making Turn
         BoardSpecification spec = board.getBoardSpecification();
         PlayerID player1ID = player1.getPlayerSpecification().getPlayerID();
         PlayerID player2ID = player2.getPlayerSpecification().getPlayerID();
 
+        boolean player1Pass = false, player2Pass = false, isGameFinished = false;
+        int turn = 0; // For Making Turn
+        BeadLOC tempLOC;
         
-        while(true) {
+        while(!isGameFinished) {
             // Making Turn
             switch(turn) {
                 case 0: {
-                    while(!placeBead( new BeadSpecification (player1ID, player1.makeTurn(spec)))){}
+                    while(true) {
+                        tempLOC = player1.makeTurn(spec);   // Player1 makes turn
+
+                        // Check for Pass
+                        if(tempLOC.getX() == -1) {
+                            player1Pass = true;
+                            // Check Game Finished Condition
+                            if(player2Pass){
+                                isGameFinished = true;
+                            }
+                            break;
+                        } else if(player2Pass) {
+                            player2Pass = false;
+                        }
+                        
+                        
+                        // If Bead is successfully placed get out of the loop
+                        if(placeBead(new BeadSpecification(player1ID, tempLOC))) {
+                            break;
+                        }
+                    }
+                    // Check if we can remove opponents beads
                     checkTurn(player1ID);
-                    turn = 1; 
+                    turn = 1; // Switch the turn
                     break;
                 }
                 case 1: {
-                    while(!placeBead( new BeadSpecification (player2ID, player2.makeTurn(spec)))){}
+                    while(true) {
+                        tempLOC = player2.makeTurn(spec); // Player2 makes Turn
+
+                        // Check for Pass
+                        if(tempLOC.getX() == -1) {
+                            player2Pass = true;
+                            // Check Game Finished Condition
+                            if(player1Pass){
+                                isGameFinished = true;
+                            }
+                            break;
+                        } else if(player1Pass) {
+                            player1Pass = false;
+                        }
+                        
+                        // If Bead is successfully placed get out of the loop
+                        if(placeBead(new BeadSpecification(player2ID, tempLOC))) {
+                            break;
+                        }
+                    }
+                    // Check if we can remove opponents beads
                     checkTurn(player2ID);
-                    turn = 0;
+                    turn = 0; // Switch the turn
                     break;
                 }
             }
-            
-            
-            if(isGameFinished()) {
-                PlayerID winnerID = checkWin();
-                
-                // Player1 is Winner
-                if(winnerID == player1ID) {
-                    
-                } 
-                // Player2 is Winner
-                else if (winnerID == player2ID) {
-
-                }
-                // Draw
-                else {
-                    
-                }
-            }
         }
+        gameFinished();
     }
     
+    
+    private void gameFinished() {
+        
+    }
     
     // Private Methods
     // Muhammad Soban
