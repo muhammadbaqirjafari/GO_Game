@@ -145,10 +145,53 @@ public class Game {
     }
     
     // Place Bead on Board
-    // Usama Ahmad
-    // Two Rules
     private boolean placeBead(BeadSpecification spec) {
-        return false;
+        // Check if there is already player bead
+        if(!board.getBeadSpecification(spec.getLoc()).getPlayerID().equals(new PlayerID(0))) {
+            return false;
+        }
+        // Ok now there is empty location
+        // Check if it is possible to place bead or not
+        // Creating a logical board where
+        // board[i][j] = 0 means empty location
+        // board[i][j] = 1 means player1 Bead
+        // board[i][j] = 2 means player2 Bead
+        int logicalBoard[][] = new int[board.getBoardSpecification().getWidth()][board.getBoardSpecification().getHeight()];
+        
+        PlayerID player1ID = player1.getPlayerSpecification().getPlayerID();
+        PlayerID player2ID = player2.getPlayerSpecification().getPlayerID();
+        for(int i = 0; i < logicalBoard[0].length; ++i) {
+            for(int j = 0; j < logicalBoard.length; ++j) {
+                // Get PlayerID at current location
+                PlayerID tempPlayerID = board.getBeadSpecification(new BeadLOC(i, j)).getPlayerID();
+                
+                if(tempPlayerID.equals(player1ID)) {
+                    logicalBoard[i][j] = 1;
+                } else if (tempPlayerID.equals(player2ID)) {
+                    logicalBoard[i][j] = 2;
+                } else {
+                    logicalBoard[i][j] = 0;
+                }
+            }
+        }
+        
+        // Placing the bead on logicalBoard
+        int x = spec.getLoc().getX();
+        int y = spec.getLoc().getY();
+        if(spec.getPlayerID().equals(player1ID)) {
+            logicalBoard[x][y] = 1;
+        } else {
+            logicalBoard[x][y] = 0;
+        }
+        
+        // If nodes are 0 than return false
+        if(totalNodes(x, y, logicalBoard) == 0) {
+            return false;
+        }
+        
+        // Now we are safe to place bead on board
+        board.placeBead(spec); // :)
+        return true;
     }
     
     
