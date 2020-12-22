@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package go_game;
+import java.util.*;
+
 
 /**
  *
@@ -24,10 +26,14 @@ public class Player {
     
     // Public Methods
     public BeadLOC makeTurn(BoardSpecification spec) {
-        double x = Math.random() * spec.getWidth() ; // [0 .. width)
-        double y = Math.random() * spec.getHeight(); // [0 .. height)
-       
-        return new BeadLOC((int)x, (int)y);
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter position x : ");
+        int x = sc.nextInt();
+        System.out.print("Enter position y : ");
+        int y = sc.nextInt();
+        
+        return new BeadLOC(x, y);
     }
     
 }
