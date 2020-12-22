@@ -168,11 +168,25 @@ public class Game {
     
     // Remove All the beads at current location
     private void removeBeads(BeadLOC loc) {
-        
+        PlayerID opponentPlayerID = board.getBeadSpecification(loc).getPlayerID();
+        // Removing Beads
+        recursiveRemoveBeads(opponentPlayerID, loc.getX(), loc.getY());
     }
     
+    // Recurssive Remove Bead
+    private void recursiveRemoveBeads(PlayerID opponentPlayerID, int x, int y) {
+        if(board.getBeadSpecification(new BeadLOC(x, y)).getPlayerID().equals(opponentPlayerID)) {
+            board.removeBead(new BeadLOC(x, y));
+        }
+        
+        // Left Check
+        // Right Check
+        // Up Check
+        // Down Check
+    }
+    
+    
     // After the end of the game check for winning player
-    // Baqir
     private PlayerID checkWin() {
         return new PlayerID(1);
     }
@@ -206,8 +220,8 @@ public class Game {
         if(spec.getPlayerID().equals(player1.getPlayerSpecification().getPlayerID())) {
             logicalBoard[x][y] = 1;
         } else {
-            logicalBoard[x][y] = 0;
-        }
+            logicalBoard[x][y] = 2;
+        }   
         
         // If nodes are 0 than return false
         if(totalNodes(x, y, logicalBoard) == 0) {
