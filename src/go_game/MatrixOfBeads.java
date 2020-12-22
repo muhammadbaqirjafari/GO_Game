@@ -36,9 +36,9 @@ public class MatrixOfBeads {
             for(int j = 0; j < beads.length; ++j) {
                 PlayerID playerID = beads[i][j].getBeadSpecification().getPlayerID();
                 
-                if(playerID.equals(player1ID)) {
+                if(playerID.getPlayerID() == 1) {
                     System.out.print("1\t");
-                } else if(playerID.equals(player2ID)) {
+                } else if(playerID.getPlayerID() == 2) {
                     System.out.print("2\t");                    
                 } else {
                     System.out.print("0\t");                    
