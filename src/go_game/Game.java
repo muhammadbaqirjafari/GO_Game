@@ -62,14 +62,14 @@ public class Game {
                         } else if(player2Pass) {
                             player2Pass = false;
                         }
-                        
+
                         // If Bead is successfully placed get out of the loop
                         if(placeBead(new BeadSpecification(player1ID, tempLOC))) {
+                            // Check if we can remove opponents beads
+                            checkTurn(player2ID, tempLOC);
                             break;
                         }
                     }
-                    // Check if we can remove opponents beads
-                    checkTurn(player2ID, tempLOC);
                     turn = 1; // Switch the turn
                     break;
                 }
@@ -92,11 +92,11 @@ public class Game {
                         
                         // If Bead is successfully placed get out of the loop
                         if(placeBead(new BeadSpecification(player2ID, tempLOC))) {
+                            // Check if we can remove opponents beads
+                            checkTurn(player1ID, tempLOC);
                             break;
                         }
                     }
-                    // Check if we can remove opponents beads
-                    checkTurn(player1ID, tempLOC);
                     turn = 0; // Switch the turn
                     break;
                 }
