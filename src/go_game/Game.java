@@ -242,9 +242,10 @@ public class Game {
     private void calculateNodes(int beadValue, int x, int y, int totalNodes[], int board[][]) {
         if(board[x][y] == 0) {
             totalNodes[0] += 1;
+            return; // Because we don't need to go further
         }
         
-        board[x][y] = -1;
+        board[x][y] = -1; // Some non-playerID value
         
         int rowLength = board[0].length;
         int columnLength = board.length;
