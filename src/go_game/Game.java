@@ -175,14 +175,29 @@ public class Game {
     
     // Recurssive Remove Bead
     private void recursiveRemoveBeads(PlayerID opponentPlayerID, int x, int y) {
-        if(board.getBeadSpecification(new BeadLOC(x, y)).getPlayerID().equals(opponentPlayerID)) {
-            board.removeBead(new BeadLOC(x, y));
-        }
+        // Beacuse we are 100% sure at given location 
+        // opponentBead exist
+        board.removeBead(new BeadLOC(x, y));
+        
+        int width = board.getBoardSpecification().getWidth();
+        int height = board.getBoardSpecification().getHeight();
         
         // Left Check
+        if(x + 1 < width && board.getBeadSpecification(new BeadLOC(x + 1, y)).getPlayerID().equals(opponentPlayerID)) {
+            recursiveRemoveBeads(opponentPlayerID, x + 1, y);
+        }
         // Right Check
+        if(x - 1 >= 0 && board.getBeadSpecification(new BeadLOC(x - 1, y)).getPlayerID().equals(opponentPlayerID)){
+            recursiveRemoveBeads(opponentPlayerID, x - 1, y);
+        }
         // Up Check
+        if(y - 1 >= 0 && board.getBeadSpecification(new BeadLOC(x, y - 1)).getPlayerID().equals(opponentPlayerID)){
+            recursiveRemoveBeads(opponentPlayerID, x, y - 1);
+        }
         // Down Check
+        if(y + 1 < height && board.getBeadSpecification(new BeadLOC(x, y + 1)).getPlayerID().equals(opponentPlayerID)){
+            recursiveRemoveBeads(opponentPlayerID, x, y + 1);            
+        }
     }
     
     
@@ -244,7 +259,7 @@ public class Game {
             totalNodes[0] += 1;
             return; // Because we don't need to go further
         }
-        
+            
         board[x][y] = -1; // Some non-playerID value
         
         int rowLength = board[0].length;
@@ -255,11 +270,11 @@ public class Game {
             calculateNodes(beadValue, x + 1, y, totalNodes, board);
         }
         // Right Check
-        if(x - 1 > 0 && board[x-1][y] == beadValue) {
+        if(x - 1 >= 0 && board[x-1][y] == beadValue) {
             calculateNodes(beadValue, x - 1, y, totalNodes, board);
         }
         // Up Check
-        if(y - 1 > 0 && board[x][y-1] == beadValue) {
+        if(y - 1 >= 0 && board[x][y-1] == beadValue) {
             calculateNodes(beadValue, x, y - 1, totalNodes, board);
         }
         // Down Check
