@@ -28,12 +28,13 @@ public class Player {
     public BeadLOC makeTurn(BoardSpecification spec) {
         Scanner sc = new Scanner(System.in);
         
+        System.out.println("Enter Valid Position or 0 for Pass");
         System.out.print("Enter position x : ");
         int x = sc.nextInt();
         System.out.print("Enter position y : ");
         int y = sc.nextInt();
         
-        return new BeadLOC(x, y);
+        return new BeadLOC(x - 1, y - 1);
     }
     
 }

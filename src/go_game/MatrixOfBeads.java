@@ -32,7 +32,14 @@ public class MatrixOfBeads {
         PlayerID player1ID = new PlayerID(1);
         PlayerID player2ID = new PlayerID(2);
         
+        // Displaying Scale
+        for(int i = 0; i <= beads.length; ++i) {
+            System.out.print(i + "\t");
+        }
+        System.out.println(); // New Line
+        
         for(int i = 0; i < beads[0].length; ++i) {
+            System.out.print(i + 1 + "\t");
             for(int j = 0; j < beads.length; ++j) {
                 PlayerID playerID = beads[i][j].getBeadSpecification().getPlayerID();
                 
