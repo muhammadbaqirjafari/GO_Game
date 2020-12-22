@@ -15,7 +15,13 @@ public class MatrixOfBeads {
             }
         }
     }
-
+    public void updateTable(int[][] dp) {
+        for(int i = 0; i<length; i++){
+            for(int j = 0; j<width; j++) {
+                this.beads[i][j] = new Bead(new BeadSpecification(new PlayerID(dp[i][j]), new BeadLOC(i, j)));
+            }
+        }
+    }
     public Bead getBead(BeadLOC loc){
         return beads[loc.getX()][loc.getY()];
     }
