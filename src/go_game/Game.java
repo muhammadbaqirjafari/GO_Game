@@ -38,6 +38,7 @@ public class Game {
         BeadLOC tempLOC;
         
         while(!isGameFinished) {
+            board.displayBoard(); // For displaying Board
             // Making Turn
             switch(turn) {
                 case 0: {

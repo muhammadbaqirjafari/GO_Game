@@ -14,16 +14,20 @@ public class Board {
         return spec;
     }
     
+    public BeadSpecification getBeadSpecification(BeadLOC loc) {
+        return matrixOfBeads.getBead(loc).getBeadSpecification();
+    }
     
+    // Public Methods
     public void placeBead(BeadSpecification spec) {
         matrixOfBeads.setBead(spec);
     }
 
-    public BeadSpecification getBeadSpecification(BeadLOC loc) {
-        return matrixOfBeads.getBead(loc).getBeadSpecification();
-    }
-
     public void removeBead(BeadLOC loc) {
         matrixOfBeads.setBead(new BeadSpecification(new PlayerID(0), loc));
+    }
+    
+    public void displayBoard() {
+        matrixOfBeads.display();
     }
 }
