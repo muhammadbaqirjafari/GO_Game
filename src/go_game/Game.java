@@ -244,6 +244,8 @@ public class Game {
             totalNodes[0] += 1;
         }
         
+        board[x][y] = -1;
+        
         int rowLength = board[0].length;
         int columnLength = board.length;
         
