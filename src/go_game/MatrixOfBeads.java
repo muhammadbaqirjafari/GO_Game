@@ -41,7 +41,7 @@ public class MatrixOfBeads {
                 } else if(playerID.equals(player2ID)) {
                     System.out.print("2\t");                    
                 } else {
-                    System.out.print("1\t");                    
+                    System.out.print("0\t");                    
                 }
             }
             System.out.println();   // New Line

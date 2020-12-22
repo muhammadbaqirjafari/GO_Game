@@ -29,9 +29,14 @@ public class Game {
     
     // Public Methods
     public void playGame() {
+        // Some useful variables
         BoardSpecification spec = board.getBoardSpecification();
-        PlayerID player1ID = player1.getPlayerSpecification().getPlayerID();
-        PlayerID player2ID = player2.getPlayerSpecification().getPlayerID();
+        PlayerSpecification player1Spec = player1.getPlayerSpecification();
+        PlayerSpecification player2Spec = player2.getPlayerSpecification();
+        PlayerID player1ID = player1Spec.getPlayerID();
+        PlayerID player2ID = player2Spec.getPlayerID();
+        String player1Name = player1Spec.getPlayerName();
+        String player2Name = player2Spec.getPlayerName();
 
         boolean player1Pass = false, player2Pass = false, isGameFinished = false;
         int turn = 0; // For Making Turn
@@ -43,6 +48,7 @@ public class Game {
             switch(turn) {
                 case 0: {
                     while(true) {
+                        System.out.println(player1Name + " turn!!!");
                         tempLOC = player1.makeTurn(spec);   // Player1 makes turn
 
                         // Check for Pass
@@ -57,7 +63,6 @@ public class Game {
                             player2Pass = false;
                         }
                         
-                        
                         // If Bead is successfully placed get out of the loop
                         if(placeBead(new BeadSpecification(player1ID, tempLOC))) {
                             break;
@@ -70,6 +75,7 @@ public class Game {
                 }
                 case 1: {
                     while(true) {
+                        System.out.println(player2Name + " turn!!!");
                         tempLOC = player2.makeTurn(spec); // Player2 makes Turn
 
                         // Check for Pass
@@ -210,7 +216,7 @@ public class Game {
     // Place Bead on Board
     private boolean placeBead(BeadSpecification spec) {
         // Check if there is already player bead
-        if(!board.getBeadSpecification(spec.getLoc()).getPlayerID().equals(new PlayerID(0))) {
+        if(board.getBeadSpecification(spec.getLoc()).getPlayerID().getPlayerID() != 0) {
             return false;
         }
         // Ok now there is empty location
@@ -249,37 +255,47 @@ public class Game {
         totalNodes[0] = 0;
         
         calculateNodes(beadValue, x, y, totalNodes, board);
-        
+
         return totalNodes[0];
     }
     
     
     // A recurssive method
     private void calculateNodes(int beadValue, int x, int y, int totalNodes[], int board[][]) {
-        if(board[x][y] == 0) {
+        int rowLength = board[0].length;
+        int columnLength = board.length;        
+        
+        // First Check Nodes around given location
+        if(x + 1 < rowLength && board[x + 1][y] == 0) {
             totalNodes[0] += 1;
-            return; // Because we don't need to go further
         }
+        if(x - 1 >= 0 && board[x - 1][y] == 0) {
+            totalNodes[0] += 1;
+        }
+        if(y - 1 >= 0 && board[x][y - 1] == 0) {
+            totalNodes[0] += 1;
+        }
+        if(y + 1 < columnLength && board[x][y + 1] == 0) {
+            totalNodes[0] += 1;
+        }
+        
             
         board[x][y] = -1; // Some non-playerID value
         
-        int rowLength = board[0].length;
-        int columnLength = board.length;
-        
         // Left Check
-        if(x + 1 < rowLength && board[x+1][y] == beadValue) {
+        if(x + 1 < rowLength && board[x + 1][y] == beadValue) {
             calculateNodes(beadValue, x + 1, y, totalNodes, board);
         }
         // Right Check
-        if(x - 1 >= 0 && board[x-1][y] == beadValue) {
+        if(x - 1 >= 0 && board[x - 1][y] == beadValue) {
             calculateNodes(beadValue, x - 1, y, totalNodes, board);
         }
         // Up Check
-        if(y - 1 >= 0 && board[x][y-1] == beadValue) {
+        if(y - 1 >= 0 && board[x][y - 1] == beadValue) {
             calculateNodes(beadValue, x, y - 1, totalNodes, board);
         }
         // Down Check
-        if(y + 1 < columnLength && board[x][y+1] == beadValue) {
+        if(y + 1 < columnLength && board[x][y + 1] == beadValue) {
             calculateNodes(beadValue, x, y + 1, totalNodes, board);
         }
     }
